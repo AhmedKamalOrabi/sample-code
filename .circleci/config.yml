@@ -1,0 +1,103 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@3.4.2
+
+jobs:
+  build:
+    docker:
+      - image: talabat/aws-nodejs
+    steps:
+      - checkout
+      - run:
+          name: install node modules
+          command: yarn install
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - ./
+  get-qa-context:
+    docker:
+      - image: talabat/aws-nodejs
+    steps:
+      - run:
+          name: Dump env variables
+          command: env > .envFile
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - ./
+  get-prod-context:
+    docker:
+      - image: talabat/aws-nodejs
+    steps:
+      - run:
+          name: Dump env variables
+          command: env > .envFile
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - ./
+  deploy-dev:
+    docker:
+      - image: talabat/aws-nodejs
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: replaces config
+          command: cp config/config.dev.js config/config.js
+      - run:
+          name: Deployment to dev environment
+          command: ENVIRONMENT_FILE=enviroments/dev.ini yarn deploy
+
+  deploy-prod:
+    docker:
+      - image: talabat/aws-nodejs
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: replaces config
+          command: cp config/config.prd.js config/config.js
+      - run:
+          name: Deployment to prod environment
+          command: ENVIRONMENT_FILE=enviroments/prd.ini yarn deploy
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build
+      - get-qa-context:
+          context: moonmin-qa
+          filters:
+            branches:
+              only:
+                - develop
+      - get-prod-context:
+          context: moonmin-prod
+          filters:
+            branches:
+              only:
+                - master
+      - deploy-dev:
+          context: moonmin-qa
+          requires:
+            - build
+            - get-qa-context
+          filters:
+            branches:
+              only:
+                - develop
+      - deploy-prod:
+          context: moonmin-prod
+          requires:
+            - build
+            - get-prod-context
+          filters:
+            branches:
+              only:
+                - master
