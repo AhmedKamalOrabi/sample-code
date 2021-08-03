@@ -4,7 +4,7 @@ import { translate } from '../constants';
 
 export const Header: React.FC = () => (
   <Flex
-    data-test-id="header"
+    data-testid="header"
     boxShadow="md"
     backgroundColor="white"
     justifyContent="center"

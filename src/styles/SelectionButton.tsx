@@ -5,7 +5,7 @@ export const SelectionButton = styled.button`
   ${css({
     outline: 'none',
     color: 'white',
-    padding: 'sm',
+    padding: 'md',
     cursor: 'pointer',
     backgroundColor: 'primary_600',
     border: 'none',

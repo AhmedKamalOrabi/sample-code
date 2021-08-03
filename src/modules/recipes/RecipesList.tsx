@@ -1,9 +1,9 @@
 import React from 'react';
-import { Row, Col } from '../../components/Grid';
-import { Flex, Box, Loader } from '../../components';
-import RecipeCard from './RecipeCard';
-import PriceInfo from './PriceInfo';
-import { parseRawPrice } from './price';
+import { Row, Col } from 'components/Grid';
+import { Flex, Box, Loader } from 'components';
+import RecipeCard from 'modules/recipes/RecipeCard';
+import PriceInfo from 'modules/recipes/PriceInfo';
+import { parseRawPrice } from 'modules/recipes/price';
 import useFetchHelloFreshBox from '../../hooks/useFetchHelloFreshBox';
 import { IRecipe, ISummary } from '../../interfaces';
 

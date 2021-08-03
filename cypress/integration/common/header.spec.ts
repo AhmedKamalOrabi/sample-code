@@ -8,7 +8,7 @@ describe('test header component', () => {
 
   context('test header Component', () => {
     it('test to contain HelloFresh Logo and have proper href', () => {
-      cy.get('[data-test-id="header"]').as('header');
+      cy.get('[data-testid="header"]').as('header');
       cy.get('@header')
         .find('a')
         .should('have.attr', 'href', '/')

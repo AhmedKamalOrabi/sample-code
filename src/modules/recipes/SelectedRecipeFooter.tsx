@@ -1,8 +1,8 @@
 import React from 'react';
-import { Flex, Box, Text } from '../../components';
-import { SelectionButton } from '../../styles';
-import IconMinusCircle from '../../icons/IconMinusCircle';
-import IconPlusCircle from '../../icons/IconPlusCircle';
+import { Flex, Box, Text } from 'components';
+import { SelectionButton } from 'styles';
+import IconMinusCircle from 'icons/IconMinusCircle';
+import IconPlusCircle from 'icons/IconPlusCircle';
 
 interface SelectedRecipeFooterProps {
   recipeId: string;
